@@ -18,7 +18,12 @@ onMounted(async () => {
     estudios.value = estudiosData;
 });
 
-const turnosActivos = computed(() => turnos.value.filter((turno) => !['CANCELADO', 'PERDIDO'].includes(resolveTurnoEstado(turno))).length);
+const contarTurnosPorEstado = (estados) => turnos.value.filter((turno) => estados.includes(resolveTurnoEstado(turno))).length;
+
+const turnosActivos = computed(() => contarTurnosPorEstado(['PENDIENTE', 'REPROGRAMADO']));
+const turnosPerdidos = computed(() => contarTurnosPorEstado(['PERDIDO']));
+const turnosCancelados = computed(() => contarTurnosPorEstado(['CANCELADO']));
+const turnosRealizados = computed(() => contarTurnosPorEstado(['REALIZADO']));
 </script>
 
 <template>
@@ -27,13 +32,31 @@ const turnosActivos = computed(() => turnos.value.filter((turno) => !['CANCELADO
             <h2 class="m-0">Mi panel</h2>
             <p class="text-gray-500 mt-2 mb-0">Turnos, estudios e historial médico personal.</p>
         </div>
-        <div class="col-span-12 md:col-span-6">
+        <div class="col-span-12 sm:col-span-6 xl:col-span-3">
             <div class="card">
                 <div class="text-gray-500 mb-2">Turnos activos</div>
-                <div class="text-3xl font-bold">{{ turnosActivos }}</div>
+                <div class="text-3xl font-bold text-orange-600">{{ turnosActivos }}</div>
             </div>
         </div>
-        <div class="col-span-12 md:col-span-6">
+        <div class="col-span-12 sm:col-span-6 xl:col-span-3">
+            <div class="card">
+                <div class="text-gray-500 mb-2">Turnos perdidos</div>
+                <div class="text-3xl font-bold text-black">{{ turnosPerdidos }}</div>
+            </div>
+        </div>
+        <div class="col-span-12 sm:col-span-6 xl:col-span-3">
+            <div class="card">
+                <div class="text-gray-500 mb-2">Turnos cancelados</div>
+                <div class="text-3xl font-bold text-red-600">{{ turnosCancelados }}</div>
+            </div>
+        </div>
+        <div class="col-span-12 sm:col-span-6 xl:col-span-3">
+            <div class="card">
+                <div class="text-gray-500 mb-2">Turnos realizados</div>
+                <div class="text-3xl font-bold text-green-600">{{ turnosRealizados }}</div>
+            </div>
+        </div>
+        <div class="col-span-12">
             <div class="card">
                 <div class="text-gray-500 mb-2">Estudios cargados</div>
                 <div class="text-3xl font-bold">{{ estudios.length }}</div>
