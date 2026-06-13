@@ -1,0 +1,6 @@
+.git-backups/
+.vscode/
+labo/target/
+labo_frontend/node_modules/
+labo_frontend/dist/
+
