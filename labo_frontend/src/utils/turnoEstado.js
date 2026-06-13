@@ -42,7 +42,7 @@ export const getTurnoEstadoSeverity = (estado) => {
         case 'REALIZADO':
             return 'success';
         case 'PERDIDO':
-            return 'contrast';
+            return 'secondary';
         default:
             return 'info';
     }
@@ -59,7 +59,7 @@ export const getTurnoEstadoTagClass = (estado) => {
         case 'REALIZADO':
             return '!bg-green-100 !text-green-700';
         case 'PERDIDO':
-            return '!bg-black !text-white';
+            return '!bg-gray-200 !text-gray-700';
         default:
             return '!bg-slate-100 !text-slate-700';
     }
@@ -76,7 +76,7 @@ export const getTurnoEstadoClass = (estado) => {
         case 'REALIZADO':
             return 'bg-green-100 text-green-700 border-green-200';
         case 'PERDIDO':
-            return 'bg-black text-white border-black';
+            return 'bg-gray-200 text-gray-700 border-gray-300';
         default:
             return 'bg-slate-100 text-slate-700 border-slate-200';
     }

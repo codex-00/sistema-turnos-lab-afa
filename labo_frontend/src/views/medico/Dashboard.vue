@@ -13,8 +13,12 @@ onMounted(async () => {
     turnos.value = await turnoService.findAllByMedico({ idMedico: medicoId.value });
 });
 
-const pendientes = computed(() => turnos.value.filter((turno) => resolveTurnoEstado(turno) === 'PENDIENTE').length);
-const realizados = computed(() => turnos.value.filter((turno) => resolveTurnoEstado(turno) === 'REALIZADO').length);
+const contarTurnosPorEstado = (estados) => turnos.value.filter((turno) => estados.includes(resolveTurnoEstado(turno))).length;
+
+const turnosActivos = computed(() => contarTurnosPorEstado(['PENDIENTE', 'REPROGRAMADO']));
+const turnosPerdidos = computed(() => contarTurnosPorEstado(['PERDIDO']));
+const turnosCancelados = computed(() => contarTurnosPorEstado(['CANCELADO']));
+const turnosRealizados = computed(() => contarTurnosPorEstado(['REALIZADO']));
 const pacientes = computed(() => new Set(turnos.value.map((turno) => turno.paciente?.idPaciente).filter(Boolean)).size);
 </script>
 
@@ -24,19 +28,31 @@ const pacientes = computed(() => new Set(turnos.value.map((turno) => turno.pacie
             <h2 class="m-0">Panel médico</h2>
             <p class="text-gray-500 mt-2 mb-0">Gestión diaria de agenda, turnos y pacientes.</p>
         </div>
-        <div class="col-span-12 md:col-span-4">
+        <div class="col-span-12 sm:col-span-6 xl:col-span-3">
             <div class="card">
-                <div class="text-gray-500 mb-2">Turnos pendientes</div>
-                <div class="text-3xl font-bold">{{ pendientes }}</div>
+                <div class="text-gray-500 mb-2">Turnos activos</div>
+                <div class="text-3xl font-bold text-orange-600">{{ turnosActivos }}</div>
             </div>
         </div>
-        <div class="col-span-12 md:col-span-4">
+        <div class="col-span-12 sm:col-span-6 xl:col-span-3">
+            <div class="card">
+                <div class="text-gray-500 mb-2">Turnos perdidos</div>
+                <div class="text-3xl font-bold text-gray-600">{{ turnosPerdidos }}</div>
+            </div>
+        </div>
+        <div class="col-span-12 sm:col-span-6 xl:col-span-3">
+            <div class="card">
+                <div class="text-gray-500 mb-2">Turnos cancelados</div>
+                <div class="text-3xl font-bold text-red-600">{{ turnosCancelados }}</div>
+            </div>
+        </div>
+        <div class="col-span-12 sm:col-span-6 xl:col-span-3">
             <div class="card">
                 <div class="text-gray-500 mb-2">Turnos realizados</div>
-                <div class="text-3xl font-bold">{{ realizados }}</div>
+                <div class="text-3xl font-bold text-green-600">{{ turnosRealizados }}</div>
             </div>
         </div>
-        <div class="col-span-12 md:col-span-4">
+        <div class="col-span-12">
             <div class="card">
                 <div class="text-gray-500 mb-2">Pacientes asignados</div>
                 <div class="text-3xl font-bold">{{ pacientes }}</div>

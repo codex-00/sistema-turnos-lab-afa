@@ -41,7 +41,7 @@ const turnosRealizados = computed(() => contarTurnosPorEstado(['REALIZADO']));
         <div class="col-span-12 sm:col-span-6 xl:col-span-3">
             <div class="card">
                 <div class="text-gray-500 mb-2">Turnos perdidos</div>
-                <div class="text-3xl font-bold text-black">{{ turnosPerdidos }}</div>
+                <div class="text-3xl font-bold text-gray-600">{{ turnosPerdidos }}</div>
             </div>
         </div>
         <div class="col-span-12 sm:col-span-6 xl:col-span-3">

@@ -21,7 +21,12 @@ onMounted(async () => {
     turnos.value = turnosData;
 });
 
-const turnosPendientes = computed(() => turnos.value.filter((turno) => resolveTurnoEstado(turno) === 'PENDIENTE').length);
+const contarTurnosPorEstado = (estados) => turnos.value.filter((turno) => estados.includes(resolveTurnoEstado(turno))).length;
+
+const turnosActivos = computed(() => contarTurnosPorEstado(['PENDIENTE', 'REPROGRAMADO']));
+const turnosPerdidos = computed(() => contarTurnosPorEstado(['PERDIDO']));
+const turnosCancelados = computed(() => contarTurnosPorEstado(['CANCELADO']));
+const turnosRealizados = computed(() => contarTurnosPorEstado(['REALIZADO']));
 </script>
 
 <template>
@@ -31,22 +36,40 @@ const turnosPendientes = computed(() => turnos.value.filter((turno) => resolveTu
             <p class="text-gray-500 mt-2 mb-0">Vista ejecutiva del sistema médico.</p>
         </div>
 
-        <div class="col-span-12 md:col-span-3">
+        <div class="col-span-12 sm:col-span-6 xl:col-span-3">
             <div class="card">
                 <div class="text-gray-500 mb-2">Médicos</div>
                 <div class="text-3xl font-bold">{{ medicos.length }}</div>
             </div>
         </div>
-        <div class="col-span-12 md:col-span-3">
+        <div class="col-span-12 sm:col-span-6 xl:col-span-3">
             <div class="card">
                 <div class="text-gray-500 mb-2">Pacientes</div>
                 <div class="text-3xl font-bold">{{ pacientes.length }}</div>
             </div>
         </div>
-        <div class="col-span-12 md:col-span-3">
+        <div class="col-span-12 sm:col-span-6 xl:col-span-3">
             <div class="card">
-                <div class="text-gray-500 mb-2">Turnos pendientes</div>
-                <div class="text-3xl font-bold">{{ turnosPendientes }}</div>
+                <div class="text-gray-500 mb-2">Turnos activos</div>
+                <div class="text-3xl font-bold text-orange-600">{{ turnosActivos }}</div>
+            </div>
+        </div>
+        <div class="col-span-12 sm:col-span-6 xl:col-span-3">
+            <div class="card">
+                <div class="text-gray-500 mb-2">Turnos perdidos</div>
+                <div class="text-3xl font-bold text-gray-600">{{ turnosPerdidos }}</div>
+            </div>
+        </div>
+        <div class="col-span-12 sm:col-span-6 xl:col-span-3">
+            <div class="card">
+                <div class="text-gray-500 mb-2">Turnos cancelados</div>
+                <div class="text-3xl font-bold text-red-600">{{ turnosCancelados }}</div>
+            </div>
+        </div>
+        <div class="col-span-12 sm:col-span-6 xl:col-span-3">
+            <div class="card">
+                <div class="text-gray-500 mb-2">Turnos realizados</div>
+                <div class="text-3xl font-bold text-green-600">{{ turnosRealizados }}</div>
             </div>
         </div>
         <div class="col-span-12">
