@@ -31,7 +31,7 @@ const pacientes = computed(() => new Set(turnos.value.map((turno) => turno.pacie
         <div class="col-span-12 sm:col-span-6 xl:col-span-3">
             <div class="card">
                 <div class="text-gray-500 mb-2">Turnos activos</div>
-                <div class="text-3xl font-bold text-orange-600">{{ turnosActivos }}</div>
+                <div class="text-3xl font-bold text-yellow-600">{{ turnosActivos }}</div>
             </div>
         </div>
         <div class="col-span-12 sm:col-span-6 xl:col-span-3">
